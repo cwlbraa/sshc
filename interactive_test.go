@@ -1,27 +1,27 @@
 package sshc_test
 
 import (
-	"github.com/cwlbraa/sshc/fakes"
+	"github.com/cwlbraa/sshc/mocks"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("interactively,", func() {
 	var (
-		testServer *fakes.FakeSSHD
+		testServer *mocks.MockSSHD
 	)
 
 	BeforeEach(func() {
-		testServer = fakes.NewFakeSSHD()
+		testServer = mocks.NewMockSSHD()
 	})
 
 	JustBeforeEach(func() {
-		err := testServer.StartListen()
+		err := testServer.Start()
 		Expect(err).NotTo(HaveOccurred())
 	})
 
 	AfterEach(func() {
-		testServer.StopListen()
+		testServer.Stop()
 	})
 
 	It("can SSH without authentication", func() {
